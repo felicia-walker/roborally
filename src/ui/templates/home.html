@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% set active_page = "home" %}
+{% block title %}Robo Rally{% endblock %}
+
+{% block content %}
+    <div class="row card-wrapper">
+        {% if players %}
+            {% for player in players %}
+                <div class="card col-lg-2 col-md-3 col-sm-4 m-2 p-2">
+                    <div>
+                        <a href="{{ url_for('player_page', player_id=player.id) }}">
+                            <img class="card-img-top embed-responsive-item {% if player.is_powered_down or not player.is_active %}subdued{% endif %}"
+                                 src="
+                                    {% if player.avatar_filename %}
+                                        {{ url_for('avatar', filename=player.avatar_filename) }}
+                                    {% else %}
+                                        {{ url_for('static', filename='images/avatar_placeholder.jpg') }}
+                                    {% endif %}" alt="">
+                        </a>
+                    </div>
+                    <h4 class="card-title">
+                        {{ player.name }}
+                    </h4>
+                    <p class="card-text"><b>Damage: </b>{{ player.damage }}</p>
+                    {% if not player.is_active %}<p class="card-text"><b>Not playing</b></p>{% endif %}
+                    {% if player.is_powered_down %}<p class="card-text"><b>Powered down</b></p>{% endif %}
+                    {% if player.will_be_powered_down %}
+                        <p class="card-text"><b>Will be powered down next turn</b></p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1 class="offset-lg-3">No players</h1>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% set active_page = "cards" %}
+{% block title %}{{ type | capitalize }} Cards{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <h1>{{ type | capitalize }} cards</h1>
+                <hr>
+                <div class="row my-5 card-wrapper">
+                    {% if cards %}
+                        {% for card in cards %}
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="embed-responsive embed-responsive-1by1  ">
+                                    <img class="embed-responsive-item"
+                                         src="{{ url_for('static', filename=prefix+ card.filename ) }}">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <h1 class="offset-lg-3">No cards found</h1>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% set active_page = "public-cards" %}
+{% block title %}Public Cards{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{{ url_for('public_cards_page') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <h1>Publicly Viewable Cards</h1>
+        <hr/>
+        <div class="row">
+            <div class="col-lg-4 offset-lg-2">
+                <h3><u>Power Cards</u></h3>
+            </div>
+            <div class="col-lg-5">
+                <h3><u>Locked registers</u></h3>
+            </div>
+        </div>
+
+        <div class="row" id="public-cards-vue">
+            <public-cards/>
+        </div>
+    </form>
+{% endblock %}

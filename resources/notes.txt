@@ -1,0 +1,1085 @@
+Osiris has been like 5 of those tokens
+11:19
+I think Colleen was the Blue Can transformer
+
+Andrew Nam  11:19 AM
+could have been carley or something
+
+tim  11:19 AM
+Someone was the grey Robot, Alexander?
+
+Andrew Nam  11:20 AM
+who was vader?
+
+tim  11:20 AM
+No, I think Alexnader was the Farmer
+11:20
+That was an old Adrienne token I think
+11:20
+Maybe used once, if ever
+11:21
+I think Travis was the farmer in blue overalls
+11:21
+Oh, I think the robot was Mr. Roboto
+11:22
+That or the traveller with the green suit
+
+Andrew Nam  11:22 AM
+I feel like that's right
+
+tim  11:22 AM
+Mr. Roboto is a dummy player if we have an uneven number of teams
+11:22
+The team with less players gets him
+11:25
+Most of the tokens that aren't marked are "Guest" tokens, spares that were adopted by new employees
+11:25
+the ones marked in the photo are definately owned and have been for a long time
+
+----
+
+
+Andrew Nam  2:04 PM
+oh boy I got that 1260 3
+
+tim  2:04 PM
+Highest Priority
+2:04
+We used to have this down to a science, calculating probabilites that any given player would have any given card
+
+Scott Walker  2:05 PM
+Good lord
+
+tim  2:05 PM
+image.png 
+image.png
+
+
+2:05
+Pennies mark damage
+2:06
+Colleen has 3 damage
+2:06
+Matthew has 2
+2:06
+Dante has 6 damage
+2:06
+Up to 4 damage you just get dealt fewer Move cards
+2:06
+0 damage = 9 cards
+1 damage = 8 cards
+2 damage = 7 cards, etc
+2:07
+But 5 damage locks your registers, starting with the last register and moving forward
+2:07
+Someone with 9 damage gets dealt 0 cards and they just play the same 5 cards over and over
+
+Scott Walker  2:07 PM
+Ok, I thought these were life markers and damage was tracked elsewhere
+
+tim  2:08 PM
+Some weapons can lock specific registers
+2:09
+So you see Dante's 2nd register is locked with a 1, and his 4th register is locked with a Right
+2:09
+That's what the post-it notes indicate
+:+1::skin-tone-2:
+1
+
+2:11
+I'm not sure what's going on with Michael.  He's got two locking damage, but only one card.  I don't know what the post-it indicates.  Likely that means "Repeat the previous register"
+So his 4th and 5th registers are locked with that one card.  It's an edge case, but technically possible
+2:11
+The caps above indicate Power Orbs
+
+Scott Walker  2:11 PM
+Never mind my earlier message, the caps are on option cards not program cards
+
+tim  2:11 PM
+That's a special game mode where orbs are scattered over the map.  They can be picked up and stolen from other players.
+2:12
+Maximum of 3 orbs can be carried, and each orb has a Power Card associated with it
+2:12
+In addition to your 2 maximum regular Power Cards
+2:12
+So we can ignore that for this game
+2:14
+The upside down power cards, stacked horizontally across the player's Move Cards indicates that they can choose one of those Power cards and must return the others (edited) 
+2:14
+And Adrienne is Powered Down
+
+
+Last login: Sun Apr 10 23:23:45 on console
+scottwalker@scottsmacbookpro ~ % ssh roborally
+Last login: Mon Apr  4 15:01:51 2022 from 172.58.131.68
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+16 package(s) needed for security, out of 19 available
+Run "sudo yum update" to apply all updates.
+[ec2-user@ip-10-222-3-113 ~]$ ./update.sh
+HEAD is now at 47e4ec4 Fully remove lock player functionality and referenes
+remote: Enumerating objects: 140, done.
+remote: Counting objects: 100% (140/140), done.
+remote: Compressing objects: 100% (27/27), done.
+remote: Total 100 (delta 70), reused 99 (delta 69), pack-reused 0
+Receiving objects: 100% (100/100), 17.90 KiB | 3.58 MiB/s, done.
+Resolving deltas: 100% (70/70), completed with 34 local objects.
+From github.com:mylollc/roborally
+ * [new branch]      deploy     -> origin/deploy
+Already up to date.
+[ec2-user@ip-10-222-3-113 ~]$ ./update.sh
+HEAD is now at 47e4ec4 Fully remove lock player functionality and referenes
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+Unpacking objects: 100% (1/1), 628 bytes | 628.00 KiB/s, done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+From github.com:mylollc/roborally
+   47e4ec4..945c1da  main       -> origin/main
+Updating 47e4ec4..945c1da
+Fast-forward
+ Pipfile                                              |   2 +
+ Pipfile.lock                                         | 300 ++++++++++++++++++++++++++++++-----------------------------
+ database/migrations/README                           |   1 +
+ database/migrations/alembic.ini                      |  50 ++++++++++
+ database/migrations/env.py                           |  91 ++++++++++++++++++
+ database/migrations/script.py.mako                   |  24 +++++
+ database/migrations/versions/e12496c22d64_initial.py |  83 +++++++++++++++++
+ resources/db_create.sql                              |  87 -----------------
+ src/application/__init__.py                          |   5 +
+ src/application/game_service.py                      |   3 +-
+ src/common/enums.py                                  |   1 -
+ src/common/repository.py                             |  10 +-
+ src/core/player.py                                   |  48 ----------
+ src/domain/models/board_state_model.py               |   4 +-
+ src/domain/models/card_model.py                      |   4 +-
+ src/domain/models/deck_model.py                      |   6 +-
+ src/domain/models/game_model.py                      |  10 +-
+ src/domain/models/player_model.py                    |  21 ++---
+ src/domain/models/registers_model.py                 |   6 +-
+ src/domain/player_factory.py                         |   1 -
+ src/ui/app.py                                        |  27 ++----
+ src/ui/static/vue/player_details.js                  |  54 ++---------
+ src/ui/static/vue/public_cards.js                    | 287 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/ui/templates/base.html                           |   7 ++
+ src/ui/templates/home.html                           |   2 +-
+ src/ui/templates/player.html                         |   1 +
+ src/ui/templates/public_cards.html                   |  13 +--
+ test/core/test_deck.py                               |   5 +-
+ test/domain/test_deck_factory.py                     |   3 +-
+ test/domain/test_player_repository.py                |  16 ----
+ test/support/fake_deck_repository.py                 |   4 +-
+ test/support/fake_player_repository.py               |   6 +-
+ 32 files changed, 758 insertions(+), 424 deletions(-)
+ create mode 100644 database/migrations/README
+ create mode 100644 database/migrations/alembic.ini
+ create mode 100644 database/migrations/env.py
+ create mode 100644 database/migrations/script.py.mako
+ create mode 100644 database/migrations/versions/e12496c22d64_initial.py
+ delete mode 100644 resources/db_create.sql
+ create mode 100644 src/ui/static/vue/public_cards.js
+[ec2-user@ip-10-222-3-113 ~]$ history | grep status
+  362  systemctl status roborally.service
+  363  systemctl status roborally.service -l
+  367  systemctl status roborally.service -l
+  374  systemctl status roborally
+  375  systemctl status roborally -l
+  395  systemctl status roborally
+  409  sudo systemctl status roborally.service
+  410  sudo systemctl status roborally.service -l
+  414  sudo systemctl status roborally.service -l
+  418  sudo systemctl status roborally.service -l
+  427  sudo systemctl status roborally.service -l
+  432  sudo systemctl status roborally.service -l
+  434  sudo systemctl status roborally.service -l
+  453  sudo systemxtl status roborally.service -l
+  454  sudo systemctl status roborally.service -l
+  461  sudo systemxtl status roborally.service -l
+  462  sudo systemctl status roborally.service -l
+  473  sudo systemctl status roborally.service -l
+  481  sudo systemctl status roborally.service -l
+  487  sudo systemctl status roborally.service -l
+  494  sudo systemctl status roborally.service -l
+  502  sudo systemctl status roborally.service -l
+  506  sudo systemctl status roborally.service -l
+  515  sudo systemctl status roborally.service -l
+  520  sudo systemctl status roborally.service -l
+  543  sudo systemctl status roborally
+  549  git status
+  563  sudo systemctl status roborally.service -l
+  569  sudo systemctl status roborally.service -l
+  581  sudo systemctl status roborally.service -l
+  584  git status
+  655  sudo systemctl status roborally
+  742  sudo systemxtl status roborally.service -l
+  743  sudo systemctl status roborally.service -l
+  760  sudo systemxtl status roborally.service -l
+  761  sudo systemctl status roborally.service -l
+  770  sudo systemctl status roborally.service -l
+  840  history | grep status
+[ec2-user@ip-10-222-3-113 ~]$ !770
+sudo systemctl status roborally.service -l
+\● roborally.service - Gunicorn instance for Roborally app
+   Loaded: loaded (/etc/systemd/system/roborally.service; enabled; vendor preset: disabled)
+   Active: failed (Result: start-limit) since Mon 2022-04-11 07:26:29 UTC; 37s ago
+  Process: 24671 ExecStart=/home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app (code=exited, status=3)
+ Main PID: 24671 (code=exited, status=3)
+
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: Unit roborally.service entered failed state.
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: roborally.service failed.
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: roborally.service holdoff time over, scheduling restart.
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: Stopped Gunicorn instance for Roborally app.
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: start request repeated too quickly for roborally.service
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: Failed to start Gunicorn instance for Roborally app.
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: Unit roborally.service entered failed state.
+Apr 11 07:26:29 ip-10-222-3-113.us-west-1.compute.internal systemd[1]: roborally.service failed.
+[ec2-user@ip-10-222-3-113 ~]$ \histoery
+-bash: histoery: command not found
+[ec2-user@ip-10-222-3-113 ~]$ history
+    1  exit
+    2  ls
+    3  sudo yum list
+    4  sudo yum list | grep python3
+    5  python version
+    6  python3
+    7  exit
+    8  apt
+    9  yu
+   10  yum
+   11  pip
+   12  pip3
+   13  pip3 install pipenv
+   14  git
+   15  yum install git
+   16  sudo yum install git
+   17  git
+   18  ls
+   19  mkdir git
+   20  cd
+   21  mkdir .ssh
+   22  cd .ssh
+   23  ls
+   24  ssh-keygen -t ed25519
+   25  ls
+   26  cat id_ed25519.pub
+   27  ssh -T git@github.com
+   28  cd
+   29  cd git
+   30  git clone git@github.com:mylollc/roborally.git
+   31  ls
+   32  cd roborally/
+   33  ls
+   34  pipenv install
+   35  cd
+   36  ls -a
+   37  vi .bashrc
+   38  cd git/roborally/
+   39  ls
+   40  pwd
+   41  cd
+   42  vi .bashrc
+   43  exit
+   44  history
+   45  pipenv run flask run
+   46  env
+   47  echo $PYTHON_PATH
+   48  echo $FLASK
+   49  vi .bashrc
+   50  logout
+   51  echo $FLASK_APP
+   52  histor
+   53  history
+   54  pipenv run flask run
+   55  pipenv
+   56  cd git/roborally/
+   57  pipenv install
+   58  pipenv run flask run
+   59  echo $PYTHON_PATH
+   60  echo $FLASK_APP
+   61  cd src/ui/
+   62  pipenv run flask run
+   63  cd
+   64  vi .bashrc
+   65  logout
+   66   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+   67  python3
+   68  cd git/roborally/src/ui
+   69  pipenv run flask run
+   70  echo $PYTHON_PATH
+   71  python3
+   72  pipenv shell
+   73  vi .bashrc
+   74  cd
+   75  !
+   76  vi .bashr
+   77  vi .bashrc
+   78  ezit
+   79  exit
+   80  cd git/roborally/src/ui/
+   81  pipenv run flask run
+   82  echo $PYTHONPATH
+   83  pwd
+   84  cd
+   85  vi .bashrc
+   86  exit
+   87   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+   88  pwd
+   89  python3
+   90  pwd
+   91  ls
+   92  cd src
+   93  s
+   94  ls
+   95  python3
+   96  pwd
+   97  cd ui
+   98  python3
+   99  exit
+  100  echo $PYTHONPATH
+  101  cd src/ro
+  102  cd src
+  103  ls
+  104  cd git/roborally/src/ui/
+  105  pipenv run flask run
+  106  pipenv shell
+  107  pwd
+  108  cd ..
+  109  pipenv run flask run
+  110  exit
+  111  vi .bashr
+  112  vi .bashrc
+  113  exit
+  114  cd git/roborally/srx
+  115  pipenv run flask run
+  116  pwd
+  117  cd git/roborally/src
+  118  pipenv run flask run
+  119  flas run --help
+  120  flask run --help
+  121  pipenv run flask run --help
+  122  exit
+  123  echo $PYTHON_PATH
+  124  cd git/roborally/src/ui/
+  125  pipenv run flask run
+  126   . /home/ec2-user/.local/share/virtualenvs/ec2-user-zzkNbF-x/bin/activate
+  127  import core.player
+  128  python3
+  129  exit
+  130   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  131  echo $PYTHONPATH
+  132  echo $FLASK_APP
+  133  python3
+  134  exit
+  135   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  136  ls
+  137  cd src
+  138  ls
+  139  python
+  140  python ui/app.py
+  141  pip list
+  142  history
+  143  pipenv run flask run
+  144  pwd
+  145  cd ui
+  146  pipenv run flask run
+  147  python
+  148  cd ..
+  149  python
+  150  exit
+  151  ls
+  152  cat Pipfile
+  153  pipenv shell
+  154  cd git
+  155  ls
+  156  cd roborally/
+  157  ls
+  158  cd
+  159  ls
+  160  rm Pipfile
+  161  cd git/roborally/
+  162  ls
+  163  pipenv --help
+  164  pipenv install
+  165  pipenv shell
+  166  echo $PYTHONPATH
+  167  pipenv shell
+  168  cd
+  169  vi .bashrc
+  170  ls
+  171  cat .bashrc
+  172  exit
+  173  sudo yum list | grep python3
+  174  sudo yum list | grep python34
+  175  sudo yum list | grep python37
+  176  cd git\r
+  177  cd git/roborally/
+  178  ls
+  179  pipenv install importlib_resources
+  180  pipenv run flask run
+  181  cd src/ui
+  182  pipenv run flask run
+  183  vi app.py
+  184  pipenv run flask run
+  185  eb
+  186  vi app.py
+  187  pipenv run flask run
+  188  vi wsgi.py
+  189  gunicorn
+  190  cd
+  191  sudo apt-get update
+  192  sudo yum install apache2
+  193  sudo apt-get
+  194  sudo yum list | grep apache
+  195  sudo yum install sudo apt-get update
+  196  sudo yum install libapache2-mod-wsgi-py3
+  197  cd git/roborally/src/ui/
+  198  pipenv run flask run
+  199  pipenv shell
+  200   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  201  echo $PYTHONPATH
+  202  python3
+  203  python -version
+  204  python
+  205  sudo yum install python310
+  206   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  207  sudo gunicorn --bind 0.0.0.0:5000 wsgi:app
+  208  gunicorn --bind 0.0.0.0:5000 wsgi:app
+  209  cd src/ui
+  210  gunicorn --bind 0.0.0.0:5000 wsgi:app
+  211  gunicorn --bind 0.0.0.0:80 wsgi:app
+  212  sudo gunicorn --bind 0.0.0.0:80 wsgi:app
+  213  exitg
+  214  exig
+  215  exit
+  216  sudo iptables -L
+  217  sudo iptables -L -t nat
+  218  cd git/roborally/src/ui/
+  219  gunicorn
+  220  history
+  221  gunicorn --bind 0.0.0.0:5000 wsgi:app
+  222  pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  223  pipenv run gunicorn --bind 0.0.0.0:80 wsgi:app
+  224  vi app.py
+  225  pipenv run gunicorn --bind 0.0.0.0:8080 wsgi:app
+  226  pipenv run gunicorn --bind 0.0.0.0:443 wsgi:app
+  227  pipenv run sudo gunicorn --bind 0.0.0.0:443 wsgi:app
+  228  sudo pipenv run gunicorn --bind 0.0.0.0:443 wsgi:app
+  229  sudo
+  230  sudo pipenv shell
+  231  sudo "pipenv run gunicorn --bind 0.0.0.0:443 wsgi:app"
+  232  sudo pipenv run authbind gunicorn --bind 0.0.0.0:443 wsgi:app
+  233  pipenv run authbind gunicorn --bind 0.0.0.0:443 wsgi:app
+  234  gunicorn --bind 0.0.0.0:443 wsgi:app
+  235  pipenv shell
+  236  exit
+  237  cd git
+  238  cd roborally/
+  239  ls
+  240  cd src/
+  241  ls
+  242  cd ui/
+  243  ls
+  244  vi wsgi.py
+  245  gunicorn
+  246  gunicorn
+  247  locate gunicorn
+  248  locate yum
+  249  sudo yum install gunicorn
+  250  sudo apt update
+  251  cd git
+  252  cd roborally/
+  253  s
+  254  ls
+  255  pipenv
+  256  pipenv install gunicorn
+  257  guicorn
+  258  gunicorn
+  259  pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  260  cd ui
+  261  cd src/ui
+  262  pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  263  ls
+  264  cat wsgi.py
+  265  pipenv shell
+  266   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  267  python
+  268  vi wsgi.py
+  269  ls
+  270  cd src
+  271  cd ui
+  272  ls
+  273  vi wsgi.py
+  274  history
+  275  pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  276  python3
+  277  vi app.py
+  278  pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  279  vi app.py
+  280  if __name__ == "__main__":;     app.run(host='0.0.0.0')
+  281  gunicorn --bind 0.0.0.0:5000 wsgi:app
+  282  vi app.py
+  283  vi wsgi.py
+  284  gunicorn --bind 0.0.0.0:5000 wsgi:app
+  285  hostname -a
+  286  ipconfig
+  287  ifconfig
+  288  ls
+  289  cat wsgi.py
+  290  tail app.py
+  291  cd /et
+  292  cd /etc
+  293  ls
+  294  ps aux
+  295  ps aux | grep http
+  296  ps aux | grep apache
+  297  ps aux | grep nginx
+  298  sudo yum update -y
+  299  sudo yum install -y httpd
+  300  sudo systemctl start httpd
+  301  sudo systemctl enable httpd
+  302  cd
+  303  cd git/roborally/src/ui/
+  304  history
+  305  pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  306  logout
+  307  history
+  308  sudo yum remove httpd
+  309  sudo yum install nginx
+  310  suod amazon-linux-extras install nginx1
+  311  sudo amazon-linux-extras install nginx1
+  312  suod amazon-linux-extras install nginx1
+  313  sudo systemctl start nginx
+  314  sudo systemctl enable nginx
+  315  cd /etc
+  316  ls
+  317  cd nginx/
+  318  ls
+  319  cd sites
+  320  ls
+  321  logout
+  322   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  323  echo $PYTHONPATH
+  324  echo $FLASK_APP
+  325  exit
+  326   . /home/ec2-user/.local/share/virtualenvs/roborally-8VA0IBxx/bin/activate
+  327  python3
+  328  exit
+  329  cd /etc/nginx/
+  330  ls
+  331  ls -l
+  332  cd conf.d
+  333  ls
+  334  cd ..
+  335  cd default.d
+  336  ls
+  337  cd ..
+  338  cat nginx.conf
+  339  vi nginx.conf
+  340  sudo vi nginx.conf
+  341  sudo systemctl restart nginx
+  342  systemctl
+  343  systmctl --help
+  344  systemctl --help
+  345  cd /etc/systemd
+  346  ls
+  347  cd system
+  348  ls
+  349  vi roborally.service
+  350  pwd
+  351  cd
+  352  pwd
+  353  cd /etc/systemd/system
+  354  sudo vi roborally.service
+  355  locate gunicorn
+  356  pipenv
+  357  pipenv run gunitorn /home/ec2-user/git/roborally/src/ui/
+  358  ls
+  359  sudo vi roborally.service
+  360  sudo systemctl daemon-reload
+  361  sudo systemctl start roborally
+  362  systemctl status roborally.service
+  363  systemctl status roborally.service -l
+  364  sudo vi roborally.service
+  365  sudo systemctl daemon-reload
+  366  sudo systemctl start roborally
+  367  systemctl status roborally.service -l
+  368  locate pipenv
+  369  which pipenv
+  370  sudo vi roborally.service
+  371  sudo systemctl daemon-reload
+  372  sudo systemctl start roborally
+  373  sudo systemctl enable roborally
+  374  systemctl status roborally
+  375  systemctl status roborally -l
+  376  cat roborally.service
+  377  /home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  378  cd
+  379  cd git/roborally/src/ui/
+  380  /home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  381  cd /etc/system.d
+  382  cd /etc
+  383  cd systemd/
+  384  cd system
+  385  ls
+  386  sudo vi roborally.service
+  387  cd /etc/nginx/
+  388  ls
+  389  sudo vi nginx.conf
+  390  sudo systemctl restart nginx
+  391  sudo systemctl restart roborally
+  392  systemctl daemon-reload
+  393  sudo systemctl daemon-reload
+  394  sudo systemctl restart roborally
+  395  systemctl status roborally
+  396  cd
+  397  cd git/roborally/src/u
+  398  history
+  399  cd git/roborally/src/ui/
+  400  /home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  401  /home/ec2-user/.local/bin/pipenv run gunicorn --bind roborally:5000 wsgi:app
+  402  vi app.py
+  403  /home/ec2-user/.local/bin/pipenv run gunicorn --bind roborally:5000 wsgi:app
+  404  /home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  405  cd
+  406  cd /etc/systemd/system
+  407  ls
+  408  sudo vi roborally.service
+  409  sudo systemctl status roborally.service
+  410  sudo systemctl status roborally.service -l
+  411  sudo vi roborally.service
+  412  sudo systemctl daemon-reload
+  413  sudo systemctl restart roborally
+  414  sudo systemctl status roborally.service -l
+  415  sudo vi roborally.service
+  416  sudo systemctl daemon-reload
+  417  sudo systemctl restart roborally
+  418  sudo systemctl status roborally.service -l
+  419  dir /home/ec2-user/.local/bin
+  420   /home/ec2-user/.local/bin/pipenv
+  421  sudo vi roborally.service
+  422  sudo systemctl daemon-reload
+  423  sudo systemctl restart roborally
+  424  sudo vi roborally.service
+  425  sudo systemctl daemon-reload
+  426  sudo systemctl restart roborally
+  427  sudo systemctl status roborally.service -l
+  428  sudo vi roborally.service
+  429  sudo systemctl restart roborally
+  430  sudo systemctl daemon-reload
+  431  sudo systemctl restart roborally
+  432  sudo systemctl status roborally.service -l
+  433  clear
+  434  sudo systemctl status roborally.service -l
+  435  cd
+  436  cd git/roborally/src/ui/
+  437  pipenv shell
+  438  ls
+  439  cd ..
+  440  ls
+  441  cat Pipfile
+  442  echo $PYTHONPATH
+  443  python
+  444  python3
+  445  pipenv shell
+  446  locate pipenv
+  447  cd /etc
+  448  cd systemd/system
+  449  ls
+  450  sudo vi roborally.service
+  451  sudo systemctl daemon-reload
+  452  sudo systemctl restart roborally.service
+  453  sudo systemxtl status roborally.service -l
+  454  sudo systemctl status roborally.service -l
+  455  exit
+  456  cd /etc/systemd/system
+  457  sudo vi roborally.service
+  458  sudo systemctl daemon-reload
+  459  systemctl restart roborally.service
+  460  sudo systemctl restart roborally.service
+  461  sudo systemxtl status roborally.service -l
+  462  sudo systemctl status roborally.service -l
+  463  sudo adduser www-data ec2-user
+  464  sudo grups
+  465  sudo groups
+  466  sudo groupadd www-data
+  467  sudo adduser www-data ec2-user
+  468  sudo groups
+  469  cat /etc/group
+  470  sudo usermod -aG www-data ec2-user
+  471  history
+  472  sudo systemctl restart roborally.service
+  473  sudo systemctl status roborally.service -l
+  474  cd
+  475  cd git/roborally/src/ui/
+  476  cat wsgi.py
+  477  /home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+  478  cd /etc/systemd/syste
+  479  cd /etc/systemd/system
+  480  cat roborally.service
+  481  sudo systemctl status roborally.service -l
+  482  sudo vi roborally.service
+  483  sudo systemctl daemon-reload
+  484  history
+  485  systemctl restart roborally.service
+  486  sudo systemctl restart roborally.service
+  487  sudo systemctl status roborally.service -l
+  488  vi app.py
+  489  sudo vi roborally.service
+  490  history
+  491  sudo systemctl daemon-reload
+  492  systemctl restart roborally.service
+  493  sudo systemctl restart roborally.service
+  494  sudo systemctl status roborally.service -l
+  495  sudo vi roborally.service
+  496  systemctl restart roborally.service
+  497  cd /etc/systemd/system
+  498  hsitory\hist
+  499  history
+  500  sudo systemctl daemon-reload
+  501  sudo systemctl restart roborally.service
+  502  sudo systemctl status roborally.service -l
+  503  sudo vi roborally.service
+  504  sudo systemctl daemon-reload
+  505  sudo systemctl restart roborally.service
+  506  sudo systemctl status roborally.service -l
+  507  sudo vi roborally.service
+  508  echo PYTHONPATH
+  509  echo $PYTHONPATH
+  510  echo $FLASK_APP
+  511  sudo vi roborally.service
+  512  systemctl restart roborally.service
+  513  sudo systemctl daemon-reload
+  514  sudo systemctl restart roborally.service
+  515  sudo systemctl status roborally.service -l
+  516  sudo vi roborally.service
+  517  systemctl restart roborally.service
+  518  sudo systemctl daemon-reload
+  519  sudo systemctl restart roborally.service
+  520  sudo systemctl status roborally.service -l
+  521  logout
+  522  cd git/roborally/src/ui/
+  523  ls
+  524  cat wsgi.py
+  525  ls
+  526  head app.py
+  527  vi app.py
+  528  cd
+  529  ls
+  530  cd /etc/nginx/
+  531  ls
+  532  cat nginx.conf
+  533  q!
+  534  more nginx.conf
+  535  q!
+  536  ls
+  537  cd /etc/systemd/system
+  538  cat roborally.service
+  539  cd
+  540  cat .bashrc
+  541  history
+  542  exit
+  543  sudo systemctl status roborally
+  544  sudo systemctl enable roborally
+  545  cd git
+  546  git pull -r
+  547  cd roborally/
+  548  git pull -r
+  549  git status
+  550  git reset --hard
+  551  git pull -r
+  552  cd
+  553  vi .bashrx
+  554  vi .bashrc
+  555  vi update.sh
+  556  chmod 755 update.sh
+  557  logut
+  558  logo9ut
+  559  exit
+  560  hsitory
+  561  more nginx.conf
+  562  history
+  563  sudo systemctl status roborally.service -l
+  564  cd git/roborally/src/ui/
+  565  cd git/roborally/src/ui/py
+  566  vi app.py
+  567  sudo system restart roborally
+  568  sudo systemctl restart roborally
+  569  sudo systemctl status roborally.service -l
+  570  cd static
+  571  cd av
+  572  ls
+  573  cd images
+  574  ls
+  575  mkdir avatars
+  576  update
+  577  vi update.sh
+  578  update
+  579  restart
+  580  logout
+  581  sudo systemctl status roborally.service -l
+  582  cd git/roborally/
+  583  git pull -r
+  584  git status
+  585  git reset
+  586  git reset --hard
+  587  git pull -r
+  588  rm src/ui/wsgi.py
+  589  git pull -r
+  590  sudo systemdtl restart roborally
+  591  sudo systemctl restart roborally
+  592  aias
+  593  alias
+  594  upate
+  595  update
+  596  locate bash
+  597  vi update.sh
+  598  update
+  599  restart
+  600  ./update.sh
+  601  vi update.sh
+  602  cd source
+  603  ls
+  604  cd git
+  605  ls
+  606  cd roborally/
+  607  head .gitignore
+  608  cd ui
+  609  cd src
+  610  cd ui/images
+  611  ls
+  612  cd ui
+  613  cd static
+  614  cd images
+  615  ls
+  616  mkdir board_states
+  617  cd
+  618  cat update.sh
+  619  vi update.sh
+  620  ./update.sh
+  621  sqlite3
+  622  cd src
+  623  cd git/roborally/
+  624  ls
+  625  cd resources/
+  626  ls
+  627  sqlite3 roborally.db < db_create.sql
+  628  vi db_create.sql
+  629  sqlite3 roborally.db < db_create.sql
+  630  sudo systemctl restart roborally
+  631  cd /etc/nginx/
+  632  ls
+  633  vi nginx.conf
+  634  sudo vi nginx.conf
+  635  sudo systemctl restart nginx
+  636  logout
+  637  cd /etc
+  638  cd nginx/
+  639  cat nginx.conf
+  640  cd
+  641  ./update.sh
+  642  cd git/roborally/resources/
+  643  ls
+  644  cp roborally.db roborally.db.bak
+  645  cd
+  646  ./update.sh
+  647  cd git/roborally/resources/
+  648  ls
+  649  cd
+  650  ]./up
+  651  cd
+  652  ./update.sh
+  653  exit
+  654  history
+  655  sudo systemctl status roborally
+  656  exit
+  657  ./update.sh
+  658  sqlite3
+  659  history | grep sql
+  660  cd git/roborally/resources/
+  661  ls
+  662  sqlite3 roborally.db
+  663  ./update.sh
+  664  exit
+  665  ./update.sh
+  666  logout
+  667  ./update.sh
+  668  cat update.sh
+  669  sudo systemctl list all
+  670  sudo systemctl restart roborally
+  671  ls
+  672  cd
+  673  ls
+  674  history
+  675  cd git
+  676  ls
+  677  cd roborally/
+  678  ls
+  679  cd resources/
+  680  ls
+  681  sqlite3 roborally.db
+  682  sudo systemctl restart roborally
+  683  ./update.sh
+  684  history
+  685  cd git/roborally/resources/
+  686  sqlite3 roborally.db
+  687  ./update.sh
+  688  exit
+  689  ./update.sh
+  690  ls
+  691  cd git
+  692  ls
+  693  cd roborally/
+  694  cd resources/
+  695  ls
+  696  history
+  697  sqlite3 roborally.db
+  698  jobs
+  699  ls
+  700  cd ..
+  701  ls
+  702  cd src
+  703  cd ui
+  704  ls
+  705  cd static
+  706  cd vuejs
+  707  ls
+  708  cd vue
+  709  ls
+  710  vi player_details.js
+  711  cd ..
+  712  cd html
+  713  ls
+  714  cd ..
+  715  ls
+  716  cd templates/
+  717  vi public_cards.html
+  718  exit
+  719  ./update.sh
+  720  sqlite3 roborally.db
+  721  hitory
+  722  cd git/roborally/resources/
+  723  sqlite3 roborally.db
+  724  cd
+  725  ./update.sh
+  726  ls
+  727  ls -
+  728  ls -l
+  729  rm roborally.db
+  730  cd git
+  731  s
+  732  ls
+  733  cd roborally/resources/
+  734  history
+  735  sqlite3 roborally.db
+  736  exit
+  737  ./update.sh
+  738  ls
+  739  service --list all
+  740  serviceistory
+  741  history
+  742  sudo systemxtl status roborally.service -l
+  743  sudo systemctl status roborally.service -l
+  744  history
+  745  sqlite3 roborally.db
+  746  pwd
+  747  ls
+  748  ls -l
+  749  rm roborally.db
+  750  cd git
+  751  cd re
+  752  cd res
+  753  ls
+  754  cd roborally/
+  755  cd resources/
+  756  sqlite3 roborally.db
+  757  cd
+  758  ./update.sh
+  759  ls
+  760  sudo systemxtl status roborally.service -l
+  761  sudo systemctl status roborally.service -l
+  762  ls
+  763  cd git/roborally/resources/
+  764  ls -l
+  765  rm roborally.db.bak
+  766  cp roborally.db roborally.db.bak
+  767  cd
+  768  history
+  769  sudo systemctl restart roborally
+  770  sudo systemctl status roborally.service -l
+  771  ls -a
+  772  ./update.sh
+  773  ./update.sh
+  774  cd git/roborally/resources/
+  775  ls
+  776  history | grep sqlite
+  777  sqlite3 roborally.db
+  778  which sqlite3
+  779  history | head
+  780  history | grep sqlite
+  781  yum upgrade
+  782  yum upgrade sqlite3
+  783  sudo yum upgrade sqlite3
+  784  sudo yum upgrade sqlite
+  785  sqlite3
+  786  pip
+  787  cd
+  788  curl
+  789  curl https://sqlite.org/2022/sqlite-autoconf-3380100.tar.gz | tar -xvr -
+  790  ls
+  791  curl https://sqlite.org/2022/sqlite-autoconf-3380100.tar.gz | tar -xvf -
+  792  ls
+  793  sudo curl https://sqlite.org/2022/sqlite-autoconf-3380100.tar.gz | tar -xvf -
+  794  sudo curl https://sqlite.org/2022/sqlite-autoconf-3380100.tar.gz | tar -zvf -
+  795  sudo curl https://sqlite.org/2022/sqlite-autoconf-3380100.tar.gz
+  796  ls
+  797  sudo curl https://sqlite.org/2022/sqlite-autoconf-3380100.tar.gz | gunzip | tar -xvf -
+  798  ls
+  799  cd sqlite-autoconf-3380100/
+  800  s
+  801  ls
+  802  ./configure
+  803  sudo ./configure
+  804  make
+  805  ls
+  806  ./configure
+  807  l
+  808  ls
+  809  cd
+  810  pip3
+  811  ls
+  812  rm -rf sqlite-autoconf-3380100/
+  813  ls
+  814  pip3 install sqlite3
+  815  sudo yum install sqlite3
+  816  sudo yum update
+  817  sqlite3
+  818  sudo yum update sqlite3
+  819  ./update.sh
+  820  logout
+  821  cd git
+  822  cd roborally/
+  823  cd resources/
+  824  ls
+  825  history
+  826  sqlite3 roborally.db
+  827  cd git/roborally/resources/
+  828  sqlite3 roborally.db
+  829  cd git/roborally/resources/
+  830  sqlite3 roborally.db
+  831  logout
+  832  cd git/roborally/resources/
+  833  sqlite3 roborally.db
+  834  exit
+  835  cd git/roborally/resources/
+  836  sqlite3 roborally.db
+  837  ezit
+  838  exit
+  839  ./update.sh
+  840  history | grep status
+  841  sudo systemctl status roborally.service -l
+  842  \histoery
+  843  history
+[ec2-user@ip-10-222-3-113 ~]$

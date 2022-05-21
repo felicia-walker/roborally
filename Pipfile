@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+wtforms = "*"
+flask-wtf = "*"
+sqlalchemy = "*"
+flask-cors = "*"
+gunicorn = "*"
+alembic = "*"
+flask-migrate = "*"
+
+[dev-packages]
+pytest = "*"
+assertpy = "*"
+
+[requires]
+python_version = "3"

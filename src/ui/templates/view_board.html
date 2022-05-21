@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% set active_page = "add" %}
+{% block title %}Game Board{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10  my-5">
+                <h1>Current Game Board</h1>
+                <hr/>
+                <form method="POST" action="{{ url_for('board_state_page') }}" enctype="multipart/form-data">
+                    <div class="row">
+                        <h3>Notes:</h3>
+                        <div class="col-lg-1 col-md-1 col-xs-1 ">
+                            {{ form.notes(rows="10", cols="100") }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 mt-3">
+                            {{ form.save(class="btn btn-primary form-control") }}
+                        </div>
+                    </div>
+                    {{ form.hidden_tag() }}
+                    {% for filename in state.filenames %}
+                        <div class="mb-4">
+                            <a href="{{ url_for('static', filename=filename ) }}" target="_blank">
+                                <img class="embed-responsive-item" src="{{ url_for('static', filename=filename ) }}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                    <div class="form-group mt-5 mb-2">
+                        {{ form.add.label }}<br>
+                        {{ form.add }}
+                    </div>
+                    {{ form.submit(class="btn btn-primary form-control") }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% set active_page = "delete" %}
+{% block title %}Delete Player{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div id="del-vue" class="row">
+            <div class="col-lg-9 my-5">
+                <h1>Delete players</h1>
+                <hr/>
+                <form method="POST" action="{{ url_for('delete_page') }}" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    {% if players %}
+                        {% for player in players %}
+                            <div class="row mt-2">
+                                <div class="col-md-5">{{ player.name }}</div>
+                                <div class="col-md-2">
+                                    {{ form|attr(player.id)(class="btn btn-primary form-control") }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

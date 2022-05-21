@@ -1,0 +1,43 @@
+body {
+    padding-top: 100px;
+}
+
+.navbar-brand {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+.card-img-top {
+    object-fit: cover;
+}
+
+.subdued {
+    opacity: 30%;
+}
+
+.overlay-icon {
+    object-fit: fill;
+    width: 50% !important;
+    height: 50% !important;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+span.card-thumbnail {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

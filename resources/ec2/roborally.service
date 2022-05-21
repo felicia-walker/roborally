@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn instance for Roborally app
+After=network.target
+
+[Service]
+User=ec2-user
+Group=www-data
+Type=simple
+Restart=always
+WorkingDirectory=/home/ec2-user/git/roborally/src/ui
+Environment="PATH=/home/ec2-user/git/roborally/src"
+Environment="PYTHONPATH=/home/ec2-user/git/roborally/src"
+Environment="FLASK_APP=app.py"
+ExecStart=/home/ec2-user/.local/bin/pipenv run gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

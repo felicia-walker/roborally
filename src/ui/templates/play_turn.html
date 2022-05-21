@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% set active_page = "play" %}
+{% block title %}Play Turn{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{{ url_for('play_turn_page', register=register) }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <h1>Playing A Turn - Register {{ register }}</h1>
+        <hr/>
+        <ul class="nav nav-tabs">
+            {% for n in range(5) %}
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if register|int == n+1 else '' }}"
+                       aria-current="{{ 'page' if register|int == n+1 else '' }}"
+                       href="{{ url_for('play_turn_page', register=n+1) }}">{{ n+1 }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% for entry in info %}
+            <div class="row">
+                <div class="col-lg-2 centered">
+                    {{ entry.name }}
+                </div>
+                <div class="col-lg-2">
+                    <span class="card-thumbnail">
+                        {% if entry.card_num == -9999 %}
+                            <img src="{{ url_for('static', filename='images/card_placeholder.png') }}"/>
+                        {% elif entry.is_powered_down %}
+                            <img src="{{ url_for('static', filename='images/1002_Powerdown.png') }}"/>
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/program_cards/'+ entry.card_filename ) }}"/>
+                        {% endif %}
+                    </span>
+                    <span class="card-thumbnail">
+                        {% if entry.throw %}
+                            <img src="{{ url_for('static', filename='images/1004_Throw.png') }}"/>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="col-lg-1">
+                    <div class="progress">
+                        <div class="progress-bar {{ "bg-warning" if entry.damage >=5 }} {{ "bg-danger" if entry.damage >=8 }}"
+                             role="progressbar" style="width: {{ entry.damage * 10 }}%;"
+                             aria-valuenow="{{ entry.damage }}"
+                             aria-valuemin="0"
+                             aria-valuemax="10">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    {{ form|attr("inc_damage_{}".format(entry.id))(class="btn btn-dark btn-lg") }}
+                    {{ form|attr("dec_damage_{}".format(entry.id))(class="btn btn-dark btn-lg") }}
+                </div>
+                <div class="col-lg-5">
+                    <b>Instructions:</b> {{ entry.instructions if entry.instructions else None }}
+                </div>
+            </div>
+            <hr/>
+        {% endfor %}
+
+        {% if register|int == 5 %}
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-2">
+                    {{ form.submit(class="btn btn-primary form-control") }}
+                </div>
+            </div>
+        {% endif %}
+    </form>
+{% endblock %}

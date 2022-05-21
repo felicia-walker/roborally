@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% set active_page = "new_game" %}
+{% block title %}New Game{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 offset-lg-2 my-5">
+                <h1>New game</h1>
+                <hr>
+                <form method="POST" action="{{ url_for('new_game_page') }}">
+                    {{ form.hidden_tag() }}
+                    <p/>
+                    <h3>This will wipe out the current game, including what's in the database!</h3></p>
+                    <p>Are you sure?</p>
+                    {{ form.cancel(class="btn form-control") }}
+                    {{ form.doit(class="btn btn-primary form-control") }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
