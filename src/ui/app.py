@@ -35,15 +35,16 @@ app.config["AVATAR_UPLOADS"] = os.path.join(basedir, "static/images/avatars")
 app.config["BOARD_UPLOADS"] = os.path.join(basedir, "static/images/board_states")
 
 # Uncomment for local
-# cors = CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
+cors = CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
 
 # Uncomment for ECs
-app.config['SERVER_NAME'] = "roborally"
-cors = CORS(app, origins=["http://roborally.mylio-internal.com"])
+#app.config['SERVER_NAME'] = "roborally"
+#cors = CORS(app, origins=["http://roborally.mylio-internal.com"])
 
 db.init_app(app)
 migrate.init_app(app, db, directory=migration_dir)
 
+# Comment when running alembic commands
 game_service: GameService = GameService(app.config["BOARD_UPLOADS"])
 
 

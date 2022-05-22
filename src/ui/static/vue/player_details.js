@@ -128,11 +128,11 @@ Vue.component('player-details', {
             program_hand: [],
             registers: [],
             // Uncomment for EC2
-            hostname: "roborally.mylio-internal.com",
-            url_base: `http://roborally.mylio-internal.com/static/images/`,
+            //hostname: "roborally.mylio-internal.com",
+            //url_base: `http://roborally.mylio-internal.com/static/images/`,
             //Uncomment for local
-            //hostname: "localhost:5000",
-            //url_base: `http://localhost:5000/static/images/`,
+            hostname: "localhost:5000",
+            url_base: `http://localhost:5000/static/images/`,
         };
     },
     async created() {
