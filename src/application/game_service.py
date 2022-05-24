@@ -40,7 +40,7 @@ class GameService:
     def discard_pile(self) -> Hand:
         return self._discard_pile
 
-    def __init__(self, board_state_directory: str, card_repository: CardRepository = None,
+    def __init__(self, base_dir: str, board_state_directory: str, card_repository: CardRepository = None,
                  deck_repository: DeckRepository = None,
                  player_repository: PlayerRepository = None, game_repository: GameRepository = None,
                  deck_factory: DeckFactory = None, game_factory: GameFactory = None,
@@ -76,7 +76,7 @@ class GameService:
             self._game_factory = game_factory
 
         if card_uploader is None:
-            self._card_uploader = CardUploader(card_repository=self._card_repository)
+            self._card_uploader = CardUploader(base_dir, self._card_repository)
         else:
             self._card_uploader = card_uploader
 
@@ -241,4 +241,4 @@ class BoardState:
 
     def __init__(self, game: Game):
         self._notes: str = game.notes
-        self._filenames: List[str] = ["{}/{}".format("images/board_states", x) for x in game.board_state_filenames]
+        self._filenames: List[str] = ["{}/{}".format(os.path.join("images","board_states"), x) for x in game.board_state_filenames]

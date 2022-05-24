@@ -21,7 +21,7 @@ class Repository(ABC, Generic[T]):
 
     def __init__(self, database: str = None):
         if database is None:
-            database = db_dir + "/roborally.db"
+            database = os.path.join(db_dir,"roborally.db")
 
         engine = create_engine("sqlite+pysqlite:///{}".format(database),
                                connect_args={"check_same_thread": False})

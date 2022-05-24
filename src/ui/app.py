@@ -19,9 +19,9 @@ from core.card import Card
 from core.hand import Hand
 from core.player import Player
 
-basedir: str = os.path.abspath(os.path.dirname(__file__))
-db_dir: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/database"
-migration_dir: str = db_dir + "/migrations"
+base_dir: str = os.path.abspath(os.path.dirname(__file__))
+db_dir: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))), "database")
+migration_dir: str = os.path.join(db_dir, "migrations")
 
 VERSION: str = "2.0"
 
@@ -31,8 +31,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite+pysqlite:///{}/roborally.db".for
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["jpeg", "jpg", "png", "gif"]
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
-app.config["AVATAR_UPLOADS"] = os.path.join(basedir, "static/images/avatars")
-app.config["BOARD_UPLOADS"] = os.path.join(basedir, "static/images/board_states")
+app.config["AVATAR_UPLOADS"] = os.path.join(base_dir, "static", "images", "avatars")
+app.config["BOARD_UPLOADS"] = os.path.join(base_dir, "static", "images", "board_states")
 
 # Uncomment for local
 cors = CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
@@ -45,7 +45,7 @@ db.init_app(app)
 migrate.init_app(app, db, directory=migration_dir)
 
 # Comment when running alembic commands
-game_service: GameService = GameService(app.config["BOARD_UPLOADS"])
+game_service: GameService = GameService(base_dir, app.config["BOARD_UPLOADS"])
 
 
 class NewPlayerForm(FlaskForm):

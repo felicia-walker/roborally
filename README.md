@@ -106,11 +106,13 @@ This assumes you already have Python installed and the prioper path variables up
 3. Install `pipenv` with `pip install --user pipenv`
 4. Create a pipenv environment via `pipenv --python <verion>` where <version> is like 3.X.
 5. Install dependencies via `pipenv install --dev`
-6. Go to _File > Preferences > Settings> then search for "venv path". Enter the path outputed from Step 4.
+6. Go to _File > Preferences > Settings_ then search for "venv path". Enter the path outputed from Step 4.
 7. Edit __settings.json__ and add:
+8. 
 ```
   "terminal.integrated.env.windows": {
     "PYTHONPATH": "${workspaceFolder}/src",
   },
 ```
-8. Install db
+8. Install db via `flask db upgrade`
+   * Comment out the GameService line in __app.py__ first, then put back when done

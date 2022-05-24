@@ -6,7 +6,7 @@ from domain.card_respository import CardRepository
 
 
 class CardUploader:
-    IMAGE_DIRECTORY: str = "/static/images"
+    IMAGE_DIRECTORY: str = os.path.join("static", "images")
 
     def __init__(self, base_dir: str = "", card_repository: CardRepository = None):
         if card_repository is None:
@@ -15,9 +15,9 @@ class CardUploader:
             self._card_repository: CardRepository = card_repository
 
         if len(base_dir) == 0:
-            self._base_dir = os.getcwd() + self.IMAGE_DIRECTORY
+            self._base_dir = os.path.join(os.getcwd(), self.IMAGE_DIRECTORY)
         else:
-            self._base_dir = base_dir
+            self._base_dir = os.path.join(base_dir, self.IMAGE_DIRECTORY)
 
     def refresh_all_cards(self):
         self._card_repository.clear_all()
@@ -35,7 +35,7 @@ class CardUploader:
             raise Exception(errors)
 
     def _refresh_power_cards(self) -> str:
-        cards = os.scandir(self._base_dir + "/power_cards")
+        cards = os.scandir(os.path.join(self._base_dir, "power_cards"))
         errors: str = ""
 
         for card in cards:
@@ -51,7 +51,7 @@ class CardUploader:
         return errors
 
     def _refresh_program_cards(self) -> str:
-        cards = os.scandir(self._base_dir + "/program_cards")
+        cards = os.scandir(os.path.join(self._base_dir,"program_cards"))
         errors: str = ""
 
         for card in cards:
