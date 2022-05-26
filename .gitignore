@@ -1,7 +1,7 @@
 .idea/*
 src/ui/static/images/avatars/*
-Src/ui/static/images/board_states/*
-src/resources/roborally.db
+src/ui/static/images/board_states/*
+src/database/roborally.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -132,3 +132,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+

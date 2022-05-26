@@ -1,5 +1,3 @@
-pipen# Robo Rally
-
 Robo Rally game helper for remote play during pandemic times
 
 ## Submit Issues

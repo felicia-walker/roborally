@@ -99,6 +99,42 @@ const apiDiscardCard = async (id, fromList, fromIndex, urlbase) => {
     }
 };
 
+const apiSetOrb = async (id, filename, value, urlbase) => {
+    try {
+        const data = {
+            orb: value
+        }
+        const headers = {
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        const response = await axios.put(`http://${urlbase}/api/players/${id}/powerCard/${filename}`, JSON.stringify(data), headers);
+
+        return parseData(response);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const apiSetNumUses = async (id, filename, value, urlbase) => {
+    try {
+        const data = {
+            numUses: value
+        }
+        const headers = {
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        const response = await axios.put(`http://${urlbase}/api/players/${id}/powerCard/${filename}`, JSON.stringify(data), headers);
+
+        return parseData(response);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 const apiThrow = async (id, index, urlbase) => {
     try {
         const data = {
@@ -127,12 +163,14 @@ Vue.component('player-details', {
             power_hand: [],
             program_hand: [],
             registers: [],
+            orbs: ["(none)", "1", "2", "3"],
+            num_uses: ["(none)", "1", "2", "3", "4", "5"],
             // Uncomment for EC2
-            //hostname: "roborally.mylio-internal.com",
-            //url_base: `http://roborally.mylio-internal.com/static/images/`,
+            hostname: "roborally.mylio-internal.com",
+            url_base: `http://roborally.mylio-internal.com/static/images/`,
             //Uncomment for local
-            hostname: "localhost:5000",
-            url_base: `http://localhost:5000/static/images/`,
+            //hostname: "localhost:5000",
+            //url_base: `http://localhost:5000/static/images/`,
         };
     },
     async created() {
@@ -174,6 +212,16 @@ Vue.component('player-details', {
         },
         async discardCard(fromIndex, fromList) {
             this.player = await apiDiscardCard(this.player.id, fromList, fromIndex, this.hostname);
+            [this.program_hand, this.power_hand, this.registers] = fixupPlayer(this.player);
+        },
+        async setOrb(evt) {
+            var value = JSON.parse(evt.target.value);
+            this.player = await apiSetOrb(this.player.id, value.filename, value.index, this.hostname);
+            [this.program_hand, this.power_hand, this.registers] = fixupPlayer(this.player);
+        },
+        async setNumUses(evt) {
+            var value = JSON.parse(evt.target.value);
+            this.player = await apiSetNumUses(this.player.id, value.filename, value.index, this.hostname);
             [this.program_hand, this.power_hand, this.registers] = fixupPlayer(this.player);
         },
         openInNewTab: function (url) {
@@ -259,11 +307,29 @@ Vue.component('player-details', {
                     </template>
                     <template v-else>
                         <span class="card-thumbnail" v-for="(p_card, i) in power_hand">
-                            <img  :src="url_base + 'power_cards/' + p_card.filename" alt=""
+                            <img :src="url_base + 'power_cards/' + p_card.filename" alt=""
                             @click="openInNewTab(url_base + 'power_cards/' + p_card.filename)"
                             draggable @dragstart="startDrag($event, i, 'power_hand')" @touchstart="startDrag($event, i, 'power_hand')"
                             @drop="onDrop($event, i, 'power_hand')" @touchend="onDrop($event, i, 'power_hand')" 
                             @dragover.prevent @dragenter.prevent @drop.stop.prevent @touchmove.prevent/>
+                            <span>
+                                Orb:
+                                <select class="form-select form-select-sm" @change="setOrb($event)">
+                                    <template v-for="(option, oi) in orbs">
+                                        <option :key="oi" v-bind:value="JSON.stringify({filename: p_card.filename, index: oi})"
+                                        :selected="oi === p_card.orb">{{ option }}</option>
+                                    </template>
+                                </select>
+                            </span>
+                            <span>
+                                Uses:
+                                <select class="form-select form-select-sm" @change="setNumUses($event)">
+                                    <template v-for="(option, oi) in num_uses">
+                                        <option :key="oi" v-bind:value="JSON.stringify({filename: p_card.filename, index: oi})"
+                                        :selected="oi === p_card.num_uses">{{ option }}</option>
+                                    </template>
+                                </select>
+                            </span>
                             <button type="button" class="mt-2 btn btn-dark btn-sm" @click="discardCard(i, 'power_hand')">Discard</button>
                         </span>
                     </template>                    

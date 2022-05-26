@@ -1,5 +1,11 @@
 # Change Log
 
+### May 31, 2022 - v2.1
+
+* Added number of uses and orb fields to power cards
+* DB migration to support the above
+* Fixed JSON encoding issue
+
 ### April 17, 2022 - v2.0
 
 * Remove power played hand
