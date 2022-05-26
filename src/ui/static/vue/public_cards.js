@@ -90,11 +90,13 @@ Vue.component('public-cards', {
         return {
             players: [],
             // Uncomment for EC2
-            //hostname: "roborally.mylio-internal.com",
-            //url_base: `http://roborally.mylio-internal.com/static/images/`,
+            hostname: "roborally.mylio-internal.com",
+            url_base: `http://roborally.mylio-internal.com/static/images/`,
             //Uncomment for local
-            hostname: "localhost:5000",
-            url_base: `http://localhost:5000/static/images/`,
+            //hostname: "localhost:5000",
+            //url_base: `http://localhost:5000/static/images/`,
+            orbs: ["(none)", "1", "2", "3"],
+            num_uses: ["(none)", "1", "2", "3", "4", "5"],
         };
     },
     async created() {
@@ -127,6 +129,16 @@ Vue.component('public-cards', {
             var player = await apiDiscardCardById(fromId, fromIndex, this.hostname);
             updatePlayer(player, this.players);
         },
+        async setOrb(evt) {
+            var value = JSON.parse(evt.target.value);
+            var player = await apiSetOrb(value.id, value.filename, value.index, this.hostname);
+            updatePlayer(player, this.players);
+        },
+        async setNumUses(evt) {
+            var value = JSON.parse(evt.target.value);
+            var player = await apiSetNumUses(valuethis.player.id, value.filename, value.index, this.hostname);
+            updatePlayer(player, this.players);
+        },
         openInNewTab: function (url) {
             window.open(url, "_blank");
         }
@@ -148,6 +160,24 @@ Vue.component('public-cards', {
                             draggable @dragstart="startDrag($event, i, player.id)" @touchstart="startDrag($event, i, player.id)"
                             @drop="onDrop($event, i, player.id)" @touchend="onDrop($event, i, player.id)" 
                             @dragover.prevent @dragenter.prevent @drop.stop.prevent @touchmove.prevent/>
+                            <span>
+                                Orb:
+                                <select class="form-select form-select-sm" @change="setOrb($event)">
+                                    <template v-for="(option, oi) in orbs">
+                                        <option :key="oi" v-bind:value="JSON.stringify({id: player.id, filename: p_card.filename, index: oi})"
+                                        :selected="oi === p_card.orb">{{ option }}</option>
+                                    </template>
+                                </select>
+                            </span>
+                            <span>
+                                Uses:
+                                <select class="form-select form-select-sm" @change="setNumUses($event)">
+                                    <template v-for="(option, oi) in num_uses">
+                                        <option :key="oi" v-bind:value="JSON.stringify({id: player.id, filename: p_card.filename, index: oi})"
+                                        :selected="oi === p_card.num_uses">{{ option }}</option>
+                                    </template>
+                                </select>
+                            </span>
                             <button type="button" class="mt-2 btn btn-dark btn-sm" @click="discardCard(i)">Discard</button>
                         </span>                  
                     </template>

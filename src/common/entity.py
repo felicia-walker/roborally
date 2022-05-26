@@ -27,3 +27,6 @@ class Entity(ABC):
             return False
 
         return self.id == other.id
+
+    def attributes(self):
+        return self.__dict__

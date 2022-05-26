@@ -18,6 +18,7 @@ from common.enums import CardType, DeckType
 from core.card import Card
 from core.hand import Hand
 from core.player import Player
+from src.core.deck_card import DeckCard
 
 base_dir: str = os.path.abspath(os.path.dirname(__file__))
 db_dir: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))), "database")
@@ -35,11 +36,11 @@ app.config["AVATAR_UPLOADS"] = os.path.join(base_dir, "static", "images", "avata
 app.config["BOARD_UPLOADS"] = os.path.join(base_dir, "static", "images", "board_states")
 
 # Uncomment for local
-cors = CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
+#cors = CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
 
 # Uncomment for ECs
-#app.config['SERVER_NAME'] = "roborally"
-#cors = CORS(app, origins=["http://roborally.mylio-internal.com"])
+app.config['SERVER_NAME'] = "roborally"
+cors = CORS(app, origins=["http://roborally.mylio-internal.com"])
 
 db.init_app(app)
 migrate.init_app(app, db, directory=migration_dir)
@@ -406,9 +407,12 @@ def board_state(filename):
 class CustomJsonEncoder(JSONEncoder):
     def default(self, o):
         try:
-            return o.__dict__
+            return o.attributes()
         except AttributeError:
-            return {}
+            try:
+                return o.__dict__
+            except AttributeError:
+                return {}
 
 
 @app.route("/api/players")
@@ -515,6 +519,36 @@ def api_discard_card(player_id):
         game_service.save_player(player)
     except Exception as err:
         print("Problem discarding {} card for player ID {}: {}".format(from_name, player_id, err))
+
+    data: str = CustomJsonEncoder().encode(player).replace('"_', '"')
+    return data
+
+
+@app.route("/api/players/<player_id>/powerCard/<filename>", methods=["PUT"])
+def api_update_power_card(player_id, filename):
+    data = request.get_json()
+    orb = data.get("orb")
+    num_uses = data.get("numUses")
+
+    try:
+        player = game_service.get_player(player_id)
+    except Exception as err:
+        print("Problem finding player ID {}: {}".format(player_id, err))
+        return ""
+
+    try:
+        from_hand: Hand = player.get_hand_by_name(DeckType.POWER_HAND)
+        card: DeckCard = from_hand.getCardByFilename(filename)
+        
+        if orb is not None:
+            card.orb = orb
+
+        if num_uses is not None:
+            card.num_uses = num_uses
+
+        game_service.save_player(player)
+    except Exception as err:
+        print("Problem updating  card {} for player ID {}: {}".format(filename, player_id, err))
 
     data: str = CustomJsonEncoder().encode(player).replace('"_', '"')
     return data

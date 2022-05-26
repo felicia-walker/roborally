@@ -4,7 +4,7 @@ from random import *
 
 from common.enums import DeckType
 from core.base_deck import BaseDeck
-from core.card import Card
+from core.deck_card import DeckCard
 
 
 class Deck(BaseDeck):
@@ -14,24 +14,24 @@ class Deck(BaseDeck):
     def __init__(self, type: DeckType, id: str = None):
         super().__init__(type, id)
 
-    def deal_card(self, target: BaseDeck) -> Card:
+    def deal_card(self, target: BaseDeck) -> DeckCard:
         if target is None:
             raise ValueError("No target deck specified.")
 
         if len(self._cards) == 0:
             raise IndexError("The deck is empty")
 
-        card: Card = None
+        DeckCard: DeckCard = None
         try:
-            card = self._cards.pop()
-            target.add_card(card)
+            DeckCard = self._cards.pop()
+            target.add_card(DeckCard)
         except IndexError as err:
-            if card is not None:
-                self._cards.append(card)
+            if DeckCard is not None:
+                self._cards.append(DeckCard)
 
             raise err
 
-        return card
+        return DeckCard
 
     def shuffle(self, times=0):
         deck = self._cards
