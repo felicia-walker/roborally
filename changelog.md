@@ -1,5 +1,9 @@
 # Change Log
 
+### June 20, 2022 - v2.2
+
+* Added API route to deal new program hand for a player
+* Fixed discard power card bug on public card page
 ### May 31, 2022 - v2.1
 
 * Added number of uses and orb fields to power cards

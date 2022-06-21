@@ -24,7 +24,7 @@ base_dir: str = os.path.abspath(os.path.dirname(__file__))
 db_dir: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))), "database")
 migration_dir: str = os.path.join(db_dir, "migrations")
 
-VERSION: str = "2.1"
+VERSION: str = "2.2"
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_hex()
@@ -437,6 +437,22 @@ def api_player(player_id):
 
     data: str = CustomJsonEncoder().encode(player).replace('"_', '"')
     return data
+
+
+@app.route("/api/players/<player_id>/deal")
+def api_player_deal(player_id):
+    ret_val: str = "Success"
+
+    try:
+        player: Player = game_service.get_player(player_id)
+        player.reset_program_hand(game_service.game.program_deck)
+        game_service.save_player(player)
+        game_service.save_game()
+    except Exception as err:
+        ret_val = "Problem dealing new program hand to player ID {}: {}".format(player_id, err)
+        print(ret_val)
+
+    return ret_val
 
 
 @app.route("/api/players/<player_id>/drawPowerCard")

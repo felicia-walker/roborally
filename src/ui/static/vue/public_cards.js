@@ -178,7 +178,7 @@ Vue.component('public-cards', {
                                     </template>
                                 </select>
                             </span>
-                            <button type="button" class="mt-2 btn btn-dark btn-sm" @click="discardCard(i)">Discard</button>
+                            <button type="button" class="mt-2 btn btn-dark btn-sm" @click="discardCard(i, player.id)">Discard</button>
                         </span>                  
                     </template>
                     <template v-else>
