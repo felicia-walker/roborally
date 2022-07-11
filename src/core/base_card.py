@@ -7,6 +7,8 @@ from core.card import Card
 from common.enums import CardType
 
 
+# This exists solely to embed the Card value type into an object that adds other attributes
+# We don't want to extend Card since it is a value type and we need an entity
 class BaseCard(Entity):
 
     @property

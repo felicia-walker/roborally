@@ -104,6 +104,9 @@ class GameService:
         props: GameProps = GameProps()
         self._game = self._game_factory.new_game(props)
 
+        # Clear out old orb and number of uses on power cards
+        self._game.power_deck.clear_cards()
+
         # Reset the players and deal new hands
         for player in self.players:
             player.reset()
@@ -192,7 +195,10 @@ class GameService:
         self.save_game()
 
         for player in self.players:
-            if player.will_be_powered_down:
+            if not player.is_active:
+                player.program_hand.clear()
+                player.registers.clear()
+            elif player.will_be_powered_down:
                 player.power_down()
                 player.will_power_up()  # Assume players normally only want to power down for one turn
                 player.reset_damage()

@@ -11,7 +11,7 @@ from core.card import Card
 from core.deck_card import DeckCard
 from core.deck import Deck
 from core.hand import Hand
-from core.base_card import BaseCard
+from core.deck_card import DeckCard
 
 
 class DeckModel(db.Model):
@@ -34,7 +34,7 @@ class DeckModel(db.Model):
     def from_deck(deck: BaseDeck) -> List[DeckModel]:
         models: List[DeckModel] = []
         for i in range(0, deck.size):
-            cur_card: BaseCard = deck.cards[i]
+            cur_card: DeckCard = deck.cards[i]
 
             if type(cur_card ) is DeckCard:
                 model: DeckModel = DeckModel(parent_id=deck.id,
@@ -71,7 +71,7 @@ class DeckModel(db.Model):
             cards.append(deck_card)
 
         deck: Deck = Deck(t, id)
-        deck.fill(cards)
+        deck.populate(cards)
 
         return deck
 
@@ -81,7 +81,7 @@ class DeckModel(db.Model):
         if len(result) == 0:
             return Hand(type, id=parent_id)
 
-        cards: List[Card] = []
+        cards: List[DeckCard] = []
         for row in result:
             id: str = row.parent_id
             type: str = row.type
@@ -90,6 +90,6 @@ class DeckModel(db.Model):
             cards.append(deck_card)
 
         hand: Hand = Hand(type, max_size, id)
-        hand.fill(cards)
+        hand.populate(cards)
 
         return hand

@@ -21,17 +21,17 @@ class Deck(BaseDeck):
         if len(self._cards) == 0:
             raise IndexError("The deck is empty")
 
-        DeckCard: DeckCard = None
+        deckCard: DeckCard = None
         try:
-            DeckCard = self._cards.pop()
-            target.add_card(DeckCard)
+            deckCard = self._cards.pop()
+            target.add_card(deckCard)
         except IndexError as err:
-            if DeckCard is not None:
-                self._cards.append(DeckCard)
+            if deckCard is not None:
+                self._cards.append(deckCard)
 
             raise err
 
-        return DeckCard
+        return deckCard
 
     def shuffle(self, times=0):
         deck = self._cards
@@ -55,3 +55,7 @@ class Deck(BaseDeck):
         deck, second_deck = deck[:cut_index], deck[cut_index:]
 
         return deck, second_deck
+
+    def clear_cards(self):
+        for cur_card in self.cards:
+            cur_card.clear()

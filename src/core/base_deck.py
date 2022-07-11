@@ -4,7 +4,8 @@ from typing import List
 
 from common.entity import Entity
 from common.enums import DeckType
-from core.base_card import BaseCard
+from core.deck_card import DeckCard
+from core.card import Card
 
 
 class BaseDeck(Entity):
@@ -15,7 +16,7 @@ class BaseDeck(Entity):
         return self._max_size
 
     @property
-    def cards(self) -> List[BaseCard]:
+    def cards(self) -> List[DeckCard]:
         return self._cards
 
     @property
@@ -39,9 +40,9 @@ class BaseDeck(Entity):
             self._max_size: int = max_size
 
         self._deck_type: DeckType = type
-        self._cards: List[BaseCard] = []
+        self._cards: List[DeckCard] = []
 
-    def add_card(self, card: BaseCard, index: int = None):
+    def add_card(self, card: DeckCard, index: int = None):
         if card is None:
             return
 
@@ -53,13 +54,19 @@ class BaseDeck(Entity):
         else:
             self._cards.insert(index, card)
 
-    def fill(self, cards: List[BaseCard]):
+    def fill(self, cards: List[Card]):
+        self.clear()
+
+        for cur_card in cards:
+            self._cards.append(DeckCard(cur_card))
+
+    def populate(self, cards: List[DeckCard]):
         self._cards = cards
 
     def clear(self):
         self._cards = []
 
-    def getCardByFilename(self, filename) -> BaseCard:
+    def getCardByFilename(self, filename) -> DeckCard:
         result = [x for x in self.cards if x.filename == filename]
 
         if len(result) > 1:

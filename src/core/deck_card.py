@@ -8,6 +8,7 @@ from core.base_card import BaseCard
 
 
 class DeckCard(BaseCard):
+    MAX_NUM_USES: int = 7
 
     @property
     def orb(self) -> int:
@@ -26,8 +27,8 @@ class DeckCard(BaseCard):
 
     @num_uses.setter
     def num_uses(self, value: int):
-        if value < 0 or value > 5:
-            raise AttributeError("Num_uses must be betwen 0 and 5, inclusive")
+        if value < 0 or value > DeckCard.MAX_NUM_USES:
+            raise AttributeError("Num_uses must be betwen 0 and 7, inclusive")
 
         self._num_uses = value
 
@@ -39,8 +40,12 @@ class DeckCard(BaseCard):
 
     # Need to flatten out the card attributes
     def attributes(self):
-        card_attributes = self._card.__dict__
-        attributes = {"orb": self.orb,
-                      "num_uses": self.num_uses}
+        return {"filename": self.filename,
+                "number": self.number,
+                "type": self.type,
+                "orb": self.orb,
+                "num_uses": self.num_uses}
 
-        return card_attributes | attributes
+    def clear(self):
+        self._orb = 0
+        self._num_uses = 0

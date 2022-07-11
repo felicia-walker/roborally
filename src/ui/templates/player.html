@@ -3,75 +3,78 @@
 {% block title %}{{ player.name }}{% endblock %}
 
 {% block content %}
-    {% set disable_ui = player.is_powered_down or player.is_destroyed or not player.is_active %}
-    <div class="container">
-        <h1>{{ player.name }}</h1>
-        <form method="POST" action="{{ url_for('player_page', player_id=player.id) }}">
-            {{ form.hidden_tag() }}
-            <div class="row">
-                <div class="col-md-2 mt-3">
-                    {{ form.active(class="btn btn-primary form-control") }}
-                </div>
+{% set disable_ui = player.is_powered_down or player.is_destroyed or not player.is_active %}
+<div class="container">
+    <h1>{{ player.name }}</h1>
+    <form method="POST" action="{{ url_for('player_page', player_id=player.id) }}">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-md-2 mt-3">
+                {{ form.active(class="btn btn-primary form-control") }}
             </div>
-            <hr>
-            <div>
-                <div class="row">
-                    <div class="col-md-1">
-                        <h3>Damage:</h3>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="progress">
-                            <div class="progress-bar {{ "bg-warning" if player.damage >=5 }} {{ "bg-danger" if player.damage >=8 }}"
-                                 role="progressbar" style="width: {{ player.damage * 10 }}%;"
-                                 aria-valuenow="{{ player.damage }}"
-                                 aria-valuemin="0"
-                                 aria-valuemax="10">
-                                {{ player.damage if not player.is_destroyed }} {{ "DESTROYED!" if player.is_destroyed }}
-                            </div>
+        </div>
+        <hr>
+        <div>
+            <div class="row">
+                <div class="col-md-1">
+                    <h3>Damage:</h3>
+                </div>
+                <div class="col-md-4">
+                    <div class="progress">
+                        <div class="progress-bar {{ " bg-warning" if player.damage>=5 }} {{ "bg-danger" if player.damage
+                            >=8 }}"
+                            role="progressbar" style="width: {{ player.damage * 10 }}%;"
+                            aria-valuenow="{{ player.damage }}"
+                            aria-valuemin="0"
+                            aria-valuemax="10">
+                            {{ player.damage if not player.is_destroyed }} {{ "DESTROYED!" if player.is_destroyed }}
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        {{ form.inc_damage(class="btn btn-dark btn-lg", disabled=not player.is_active) }}
-                    </div>
-                    <div class="col-md-1">
-                        {{ form.dec_damage(class="btn btn-dark btn-lg", disabled=not player.is_active) }}
-                    </div>
                 </div>
-
-                <h2>If you want to be powered down <b>NEXT</b> turn, set it here:</h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3>You will be powered <b><u>{{ "DOWN" if player.will_be_powered_down else "UP" }}</u></b> next
-                            turn
-                        </h3>
-                    </div>
-                    <div class="col-md-2">
-                        {{ form.power_down(class="btn btn-dark btn-lg", disabled=player.is_destroyed or not player.is_active) }}
-                    </div>
-                    <div class="col-md-2">
-                        {{ form.power_up(class="btn btn-dark btn-lg", disabled=player.is_destroyed or not player.is_active) }}
-                    </div>
+                <div class="col-md-1">
+                    {{ form.inc_damage(class="btn btn-dark btn-lg", disabled=not player.is_active) }}
                 </div>
-                <hr/>
-
-                <div class="row" id="player-vue">
-                    <player-details id="{{ player.id }}"/>
-                </div>
-                
-                <div class="row">
-                    <h3>Instructions:</h3>
-                    <div class="col-lg-1 col-md-1 col-xs-1 ">
-                        {{ form.instructions(rows="10", cols="100", disabled=disable_ui) }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-2 mt-3">
-                        {{ form.save(class="btn btn-primary form-control", disabled=disable_ui) }}
-                    </div>
+                <div class="col-md-1">
+                    {{ form.dec_damage(class="btn btn-dark btn-lg", disabled=not player.is_active) }}
                 </div>
             </div>
-        </form>
-    </div>
+
+            <h2>If you want to be powered down <b>NEXT</b> turn, set it here:</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>You will be powered <b><u>{{ "DOWN" if player.will_be_powered_down else "UP" }}</u></b> next
+                        turn
+                    </h3>
+                </div>
+                <div class="col-md-2">
+                    {{ form.power_down(class="btn btn-dark btn-lg", disabled=player.is_destroyed or not
+                    player.is_active) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.power_up(class="btn btn-dark btn-lg", disabled=player.is_destroyed or not player.is_active)
+                    }}
+                </div>
+            </div>
+            <hr />
+
+            <div class="row" id="player-vue">
+                <player-details id="{{ player.id }}" />
+            </div>
+
+            <div class="row">
+                <h3>Instructions:</h3>
+                <div class="col-lg-1 col-md-1 col-xs-1 ">
+                    {{ form.instructions(rows="10", cols="100") }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mt-3">
+                    {{ form.save(class="btn btn-primary form-control") }}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

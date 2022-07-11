@@ -1,5 +1,12 @@
 # Change Log
 
+### July 11, 2022 - v2.3
+
+* Player instructions field always enabled
+* Clear out orb and num uses card fields on new games
+* Fixed code issue with use of BaseCard vs Card
+* Clear program hand and registers when out of game
+
 ### June 20, 2022 - v2.2
 
 * Added API route to deal new program hand for a player
