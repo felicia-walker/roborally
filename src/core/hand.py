@@ -26,7 +26,7 @@ class Hand(BaseDeck):
         try:
             card = self._cards.pop(index)
             target.add_card(card, target_index)
-        except IndexError as err:
+        except Exception as err:
             if card is not None:
                 self._cards.insert(index, card)
 

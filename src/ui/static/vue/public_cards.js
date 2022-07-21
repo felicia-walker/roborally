@@ -57,7 +57,7 @@ const apiTransferCardBetweenPlayers = async (fromId, fromIndex, toId, toIndex, u
     }
 };
 
-const apiDiscardCardById = async (id, fromId, fromIndex, urlbase) => {
+const apiDiscardCardById = async (fromId, fromIndex, urlbase) => {
     try {
         const data = {
             fromHand: "power_hand",
@@ -96,7 +96,7 @@ Vue.component('public-cards', {
             //hostname: "localhost:5000",
             //url_base: `http://localhost:5000/static/images/`,
             orbs: ["(none)", "1", "2", "3"],
-            num_uses: ["(none)", "1", "2", "3", "4", "5"],
+            num_uses: ["(none)", "1", "2", "3", "4", "5", "6", "7"],
         };
     },
     async created() {
@@ -136,7 +136,7 @@ Vue.component('public-cards', {
         },
         async setNumUses(evt) {
             var value = JSON.parse(evt.target.value);
-            var player = await apiSetNumUses(valuethis.player.id, value.filename, value.index, this.hostname);
+            var player = await apiSetNumUses(value.id, value.filename, value.index, this.hostname);
             updatePlayer(player, this.players);
         },
         openInNewTab: function (url) {

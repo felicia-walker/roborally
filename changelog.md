@@ -1,5 +1,13 @@
 # Change Log
 
+### July 20, 2022 - v2.4
+
+* Fixed inability to discard a power card from public card page
+* Fixed inability to set number of uses on public card page
+* Upped number of use limit to 7
+* Do not deal power cards to inactive players on new game
+* Added guard code around card transfer to try and fix problem where card disappears when dragging
+
 ### July 11, 2022 - v2.3
 
 * Player instructions field always enabled

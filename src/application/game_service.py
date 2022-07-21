@@ -111,9 +111,7 @@ class GameService:
         for player in self.players:
             player.reset()
             player.reset_program_hand(self._game.program_deck)
-
-            for num_cards in range(0, self.NUM_POWER_CARDS_NEW_GAME):
-                player.draw_power_card(self._game.power_deck)
+            player.reset_power_hand(self._game.power_deck, self.NUM_POWER_CARDS_NEW_GAME)
 
             self.save_player(player)
 

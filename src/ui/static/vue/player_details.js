@@ -164,7 +164,7 @@ Vue.component('player-details', {
             program_hand: [],
             registers: [],
             orbs: ["(none)", "1", "2", "3"],
-            num_uses: ["(none)", "1", "2", "3", "4", "5"],
+            num_uses: ["(none)", "1", "2", "3", "4", "5", "6", "7"],
             // Uncomment for EC2
             hostname: "roborally.mylio-internal.com",
             url_base: `http://roborally.mylio-internal.com/static/images/`,

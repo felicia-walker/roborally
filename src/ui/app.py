@@ -24,7 +24,7 @@ base_dir: str = os.path.abspath(os.path.dirname(__file__))
 db_dir: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))), "database")
 migration_dir: str = os.path.join(db_dir, "migrations")
 
-VERSION: str = "2.2"
+VERSION: str = "2.4"
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_hex()
@@ -508,11 +508,16 @@ def api_transfer_card(player_id):
             game_service.save_player(to_player)
     except Exception as err:
         print("Problem transferring {} card to {} for player ID {}: {}".format(from_name, to_name, player_id, err))
+        from_player = game_service.get_player(player_id)
+
+        if len(to_id) > 0:
+            to_player = game_service.get_player(to_id)
 
     if from_player == to_player:
         data: str = CustomJsonEncoder().encode(from_player).replace('"_', '"')
     else:
         data: str = CustomJsonEncoder().encode([from_player, to_player]).replace('"_', '"')
+        
     return data
 
 

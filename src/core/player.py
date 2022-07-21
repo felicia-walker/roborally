@@ -105,14 +105,23 @@ class Player(Entity):
     def draw_power_card(self, deck: Deck) -> Card:
         return deck.deal_card(self._power_hand)
 
-    def reset_program_hand(self, deck: Deck):
+    def reset_program_hand(self, source_deck: Deck):
         self._program_hand.clear()
 
         if self.is_powered_down or not self.is_active:
             return
 
         for i in range(0, self.MAX_PROGRAM_HAND_SIZE - self._damage):
-            deck.deal_card(self._program_hand)
+            source_deck.deal_card(self._program_hand)
+
+    def reset_power_hand(self, source_deck: Deck, hand_size: int):
+        self._power_hand.clear()
+
+        if not self.is_active:
+            return
+
+        for num_cards in range(0, hand_size):
+            self.draw_power_card(source_deck)
 
     def reset_damage(self):
         self._damage = 0
