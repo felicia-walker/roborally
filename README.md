@@ -78,7 +78,7 @@ Note: It is expected that the app will run under _~/git/roborally_ as the user _
 4. Have Roborally run as a service:
     1. Copy _/resources/ec2/roborally.service_ to _/etc/systemd/system_
     2. Create a _www-data_ system group and add ec2-user - TBD, but you can look it up
-    3. `sudo systemctl daeomon-reload`
+    3. `sudo systemctl daemon-reload`
     4. Run with `sudo systemctl start roborally.service`
     5. `sudo systemctl enable roborally` to have it run on restart
 
